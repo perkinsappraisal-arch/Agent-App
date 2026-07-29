@@ -57,10 +57,10 @@ module.exports = {
                     hi: "#84A972",
                     lo: "#4F6F42",
                 },
-                gold: {                // repurposed as terracotta — primary CTA
-                    DEFAULT: "#C55A3D",
-                    hi: "#DC6E4E",
-                    lo: "#9E4630",
+                gold: {                // cheerful sunny marigold — primary CTA
+                    DEFAULT: "#E5A83E",
+                    hi: "#F4BE55",
+                    lo: "#B58021",
                 },
                 rose: "#E8869B",       // cheerful rose from the flower beds
                 navy: {

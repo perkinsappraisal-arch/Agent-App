@@ -14,8 +14,8 @@
         --card-foreground: 213 51% 24%;
         --popover: 0 0% 100%;
         --popover-foreground: 213 51% 24%;
-        --primary: 13 55% 51%;           /* terracotta #C55A3D */
-        --primary-foreground: 45 60% 96%;
+        --primary: 39 76% 57%;           /* marigold #E5A83E */
+        --primary-foreground: 213 51% 24%;
         --secondary: 42 65% 86%;         /* butter */
         --secondary-foreground: 213 51% 24%;
         --muted: 42 45% 92%;
@@ -26,7 +26,7 @@
         --destructive-foreground: 0 0% 100%;
         --border: 40 44% 85%;            /* #E8DFC7 warm border */
         --input: 40 44% 85%;
-        --ring: 13 55% 51%;
+        --ring: 39 76% 57%;
         --radius: 0.9rem;
     }
     html,
@@ -42,8 +42,8 @@
         -moz-osx-font-smoothing: grayscale;
     }
     ::selection {
-        background: #c55a3d;
-        color: #fcf9f0;
+        background: #e5a83e;
+        color: #1e3a5f;
     }
     * {
         @apply border-border;
@@ -94,10 +94,10 @@
         padding: 1px;
         background: linear-gradient(
             140deg,
-            rgba(197, 90, 61, 0) 0%,
-            rgba(197, 90, 61, 0.5) 25%,
+            rgba(229, 168, 62, 0) 0%,
+            rgba(229, 168, 62, 0.55) 25%,
             rgba(107, 142, 90, 0.5) 65%,
-            rgba(197, 90, 61, 0) 100%
+            rgba(232, 134, 155, 0.4) 100%
         );
         -webkit-mask:
             linear-gradient(#000 0 0) content-box,
@@ -107,16 +107,16 @@
         pointer-events: none;
     }
     .btn-gold {
-        background: #c55a3d;
-        color: #fcf9f0;
+        background: #e5a83e;
+        color: #1e3a5f;
         transition: background-color 0.18s ease, transform 0.18s ease,
             box-shadow 0.18s ease;
-        box-shadow: 0 6px 18px -8px rgba(197, 90, 61, 0.55);
+        box-shadow: 0 6px 18px -8px rgba(229, 168, 62, 0.6);
     }
     .btn-gold:hover {
-        background: #dc6e4e;
+        background: #f4be55;
         transform: translateY(-1px);
-        box-shadow: 0 12px 24px -10px rgba(197, 90, 61, 0.6);
+        box-shadow: 0 12px 24px -10px rgba(229, 168, 62, 0.7);
     }
     .btn-ghost {
         color: #1e3a5f;
@@ -126,8 +126,8 @@
             transform 0.18s ease;
     }
     .btn-ghost:hover {
-        border-color: #c55a3d;
-        background: #fff5ef;
+        border-color: #e5a83e;
+        background: #fff8ea;
         transform: translateY(-1px);
     }
     .chip-sold {
