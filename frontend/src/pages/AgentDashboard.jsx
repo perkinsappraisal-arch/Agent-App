@@ -99,7 +99,7 @@ export default function AgentDashboard() {
                     <div className="text-fog text-xs">{l.email} · {l.phone}</div>
                   </TableCell>
                   <TableCell><Badge variant="outline" className="border-gold/40 text-gold">{l.kind}</Badge></TableCell>
-                  <TableCell className="text-fog text-sm">{l.city}, {l.state} · {l.zip_code}</TableCell>
+                  <TableCell className="text-fog text-sm">{l.street_address}<br/>{l.city}, {l.state} · {l.zip_code}</TableCell>
                   <TableCell className="text-fog text-sm">{l.timeline}</TableCell>
                   <TableCell>
                     <Badge className={

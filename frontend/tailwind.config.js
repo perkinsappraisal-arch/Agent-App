@@ -46,17 +46,31 @@ module.exports = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
-                obsidian: "#0A0A0C",
-                surface: "#121217",
-                gold: {
-                    DEFAULT: "#D4AF37",
-                    hi: "#E5C158",
-                    lo: "#8A6D0B",
+                /* AgentEscrow — cheerful warm palette
+                 * We keep the semantic names so existing className strings still work,
+                 * but the values are remapped to a bright, welcoming home-buying palette. */
+                obsidian: "#FCF9F0",   // was dark bg — now warm cream (page background)
+                surface: "#FFFFFF",    // pure white cards on cream
+                butter: "#F4E4C1",     // soft butter-yellow section bands (from the Victorian siding)
+                sage: {
+                    DEFAULT: "#6B8E5A",// leafy sage from the garden
+                    hi: "#84A972",
+                    lo: "#4F6F42",
                 },
-                signal: "#FF3B30",
-                ink: "#F5F5F5",
-                fog: "#8A8A93",
-                hairline: "#27272A",
+                gold: {                // repurposed as terracotta — primary CTA
+                    DEFAULT: "#C55A3D",
+                    hi: "#DC6E4E",
+                    lo: "#9E4630",
+                },
+                rose: "#E8869B",       // cheerful rose from the flower beds
+                navy: {
+                    DEFAULT: "#1E3A5F",// the buyer's navy blazer — trust & headings
+                    hi: "#2C4E7A",
+                },
+                signal: "#DC6E4E",     // warm coral (still used for warnings)
+                ink: "#1E3A5F",        // main text color (was near-white, now navy)
+                fog: "#6B7280",        // muted body text
+                hairline: "#E8DFC7",   // warm cream border
             },
             fontFamily: {
                 display: ['"Cabinet Grotesk"', '"Space Grotesk"', "system-ui", "sans-serif"],
@@ -64,7 +78,7 @@ module.exports = {
                 mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
             },
             letterSpacing: {
-                mega: "-0.04em",
+                mega: "-0.035em",
             },
             borderRadius: {
                 lg: "var(--radius)",
@@ -88,12 +102,17 @@ module.exports = {
                     from: { opacity: "0", transform: "translateY(16px)" },
                     to: { opacity: "1", transform: "translateY(0)" },
                 },
+                "float": {
+                    "0%,100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(-6px)" },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
                 "marquee": "marquee 40s linear infinite",
                 "reveal": "reveal .6s cubic-bezier(.2,.6,.2,1) both",
+                "float": "float 6s ease-in-out infinite",
             },
         },
     },

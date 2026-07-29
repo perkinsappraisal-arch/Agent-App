@@ -164,6 +164,7 @@ class LeadIn(BaseModel):
     full_name: str = Field(min_length=2, max_length=120)
     email: EmailStr
     phone: str = Field(min_length=6, max_length=32)
+    street_address: str = Field(min_length=3, max_length=200)
     city: str = Field(min_length=1, max_length=80)
     state: str = Field(min_length=2, max_length=40)
     zip_code: str = Field(min_length=3, max_length=12)
@@ -329,6 +330,7 @@ async def submit_lead(body: LeadIn, request: Request):
         "full_name": body.full_name,
         "email": body.email.lower(),
         "phone": body.phone,
+        "street_address": body.street_address,
         "city": body.city,
         "state": body.state,
         "zip_code": body.zip_code,
@@ -357,6 +359,7 @@ async def submit_lead(body: LeadIn, request: Request):
             "client_name": body.full_name,
             "client_email": body.email.lower(),
             "client_role": body.kind,
+            "street_address": body.street_address,
             "city": body.city,
             "state": body.state,
         },

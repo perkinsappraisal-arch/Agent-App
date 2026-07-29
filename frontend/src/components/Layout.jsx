@@ -8,12 +8,12 @@ export default function Layout({ children }) {
   const nav = useNavigate();
 
   const linkCls = ({ isActive }) =>
-    `text-sm tracking-wide transition-colors ${
-      isActive ? "text-gold" : "text-ink/70 hover:text-gold"
+    `text-sm tracking-wide transition-colors font-medium ${
+      isActive ? "text-gold" : "text-navy/70 hover:text-gold"
     }`;
 
   return (
-    <div className="min-h-screen bg-obsidian text-ink">
+    <div className="min-h-screen bg-obsidian text-navy">
       <header
         data-testid="site-header"
         className="glass sticky top-0 z-50"
@@ -81,10 +81,10 @@ export default function Layout({ children }) {
         </div>
       </header>
       <main>{children}</main>
-      <footer className="border-t border-hairline mt-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-10 grid gap-6 md:grid-cols-3 text-sm text-fog">
+      <footer className="border-t border-hairline mt-24 bg-butter/40">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-10 grid gap-6 md:grid-cols-3 text-sm text-navy/70">
           <div>
-            <div className="font-display text-ink text-lg tracking-mega font-black">
+            <div className="font-display text-navy text-lg tracking-mega font-black">
               agent<span className="text-gold">escrow</span>
             </div>
             <p className="mt-2 max-w-xs">

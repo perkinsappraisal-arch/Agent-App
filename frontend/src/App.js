@@ -25,10 +25,10 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <Toaster
-            theme="dark"
+            theme="light"
             position="top-right"
             toastOptions={{
-              className: "!bg-surface !text-ink !border-hairline",
+              className: "!bg-surface !text-navy !border-hairline",
             }}
           />
           <Layout>

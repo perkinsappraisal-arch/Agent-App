@@ -170,8 +170,11 @@ export default function AgentApply() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Service area (cities / counties)" testId="agent-service-area">
+            <Field label="Service area (cities / counties — within a 1-hour drive)" testId="agent-service-area">
               <Input value={form.service_area} onChange={(e) => upd("service_area", e.target.value)} placeholder="e.g. Denver metro, Boulder County" data-testid="agent-service-area-input" />
+              <div className="mt-1.5 text-xs text-navy/50">
+                We only assign leads whose address is within an hour of areas you list here.
+              </div>
             </Field>
             <Field label="Years of experience" testId="agent-years">
               <Input type="number" min="0" max="70" value={form.years_experience} onChange={(e) => upd("years_experience", Number(e.target.value || 0))} data-testid="agent-years-input" />

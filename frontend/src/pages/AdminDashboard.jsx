@@ -182,7 +182,10 @@ export default function AdminDashboard() {
                       <div className="text-fog text-xs">{l.email}</div>
                     </TableCell>
                     <TableCell><Badge variant="outline" className="border-gold/40 text-gold">{l.kind}</Badge></TableCell>
-                    <TableCell className="text-fog text-sm">{l.city}, {l.state}</TableCell>
+                    <TableCell className="text-fog text-sm">
+                      <div>{l.street_address}</div>
+                      <div>{l.city}, {l.state} · {l.zip_code}</div>
+                    </TableCell>
                     <TableCell className="text-fog text-sm">{l.timeline}</TableCell>
                     <TableCell className="text-fog text-xs">
                       {l.assigned_agent ? `${l.assigned_agent.name} — ${l.assigned_agent.brokerage}` : "—"}

@@ -17,6 +17,7 @@ const empty = {
   full_name: "",
   email: "",
   phone: "",
+  street_address: "",
   city: "",
   state: "",
   zip_code: "",
@@ -40,7 +41,7 @@ export default function LeadForm() {
   const goNext = (e) => {
     e.preventDefault();
     // basic validation
-    const required = ["full_name", "email", "phone", "city", "state", "zip_code"];
+    const required = ["full_name", "email", "phone", "street_address", "city", "state", "zip_code"];
     for (const k of required) {
       if (!form[k].trim()) {
         toast.error(`Please fill in ${k.replace("_", " ")}`);
@@ -182,6 +183,18 @@ export default function LeadForm() {
               <Input value={form.zip_code} onChange={(e) => upd("zip_code", e.target.value)} data-testid="lead-zip-input" />
             </Field>
           </div>
+
+          <Field label={form.kind === "buyer" ? "Address you're looking near (or current address)" : "Address of the home you're selling"} testId="lead-address">
+            <Input
+              value={form.street_address}
+              onChange={(e) => upd("street_address", e.target.value)}
+              placeholder="123 Main St"
+              data-testid="lead-address-input"
+            />
+            <div className="mt-1.5 text-xs text-navy/50">
+              We match you with a trusted local agent within an hour of this address.
+            </div>
+          </Field>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Price range" testId="lead-price">

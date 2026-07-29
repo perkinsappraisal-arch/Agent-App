@@ -7,32 +7,32 @@
 
 @layer base {
     :root {
-        /* AgentEscrow dark palette — Obsidian + Gold + Signal Red */
-        --background: 240 8% 4%;         /* #0A0A0C */
-        --foreground: 0 0% 96%;
-        --card: 240 8% 8%;               /* #121217 */
-        --card-foreground: 0 0% 96%;
-        --popover: 240 8% 8%;
-        --popover-foreground: 0 0% 96%;
-        --primary: 45 74% 52%;           /* Gold #D4AF37 */
-        --primary-foreground: 240 8% 5%;
-        --secondary: 240 5% 14%;
-        --secondary-foreground: 0 0% 96%;
-        --muted: 240 5% 12%;
-        --muted-foreground: 240 4% 56%;
-        --accent: 45 74% 52%;
-        --accent-foreground: 240 8% 5%;
-        --destructive: 4 100% 59%;       /* Signal Red */
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 5% 16%;            /* #27272A */
-        --input: 240 5% 16%;
-        --ring: 45 74% 52%;
-        --radius: 0.75rem;
+        /* AgentEscrow — cheerful warm palette (light mode) */
+        --background: 45 60% 96%;        /* #FCF9F0 warm cream */
+        --foreground: 213 51% 24%;       /* #1E3A5F deep navy */
+        --card: 0 0% 100%;               /* white cards */
+        --card-foreground: 213 51% 24%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 213 51% 24%;
+        --primary: 13 55% 51%;           /* terracotta #C55A3D */
+        --primary-foreground: 45 60% 96%;
+        --secondary: 42 65% 86%;         /* butter */
+        --secondary-foreground: 213 51% 24%;
+        --muted: 42 45% 92%;
+        --muted-foreground: 220 9% 46%;
+        --accent: 100 22% 45%;           /* sage #6B8E5A */
+        --accent-foreground: 45 60% 96%;
+        --destructive: 13 68% 58%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 40 44% 85%;            /* #E8DFC7 warm border */
+        --input: 40 44% 85%;
+        --ring: 13 55% 51%;
+        --radius: 0.9rem;
     }
     html,
     body {
-        background: #0a0a0c;
-        color: #f5f5f5;
+        background: #fcf9f0;
+        color: #1e3a5f;
     }
     body {
         margin: 0;
@@ -42,8 +42,8 @@
         -moz-osx-font-smoothing: grayscale;
     }
     ::selection {
-        background: #d4af37;
-        color: #0a0a0c;
+        background: #c55a3d;
+        color: #fcf9f0;
     }
     * {
         @apply border-border;
@@ -59,27 +59,32 @@
         text-transform: uppercase;
         letter-spacing: 0.22em;
         font-size: 0.72rem;
-        color: #d4af37;
-        font-weight: 600;
-    }
-    .grain::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        opacity: 0.06;
-        mix-blend-mode: overlay;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+        color: #c55a3d;
+        font-weight: 700;
     }
     .glass {
-        background: rgba(18, 18, 23, 0.7);
+        background: rgba(252, 249, 240, 0.75);
         backdrop-filter: blur(18px) saturate(140%);
         -webkit-backdrop-filter: blur(18px) saturate(140%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(30, 58, 95, 0.08);
+    }
+    /* Warm "sunlight" bands used to separate sections */
+    .band-butter {
+        background: linear-gradient(180deg, #f8ecc9 0%, #f4e4c1 100%);
+    }
+    .band-sage {
+        background: linear-gradient(180deg, #eef3e6 0%, #dfead1 100%);
+    }
+    .band-rose {
+        background: linear-gradient(180deg, #fcecef 0%, #f7d6df 100%);
     }
     .tracing-beam {
         position: relative;
-        border: 1px solid #27272a;
+        border: 1px solid #e8dfc7;
+        background: #ffffff;
+        box-shadow:
+            0 1px 0 rgba(30, 58, 95, 0.04),
+            0 12px 28px -18px rgba(30, 58, 95, 0.18);
     }
     .tracing-beam::before {
         content: "";
@@ -89,9 +94,10 @@
         padding: 1px;
         background: linear-gradient(
             140deg,
-            rgba(212, 175, 55, 0) 0%,
-            rgba(212, 175, 55, 0.6) 20%,
-            rgba(212, 175, 55, 0) 60%
+            rgba(197, 90, 61, 0) 0%,
+            rgba(197, 90, 61, 0.5) 25%,
+            rgba(107, 142, 90, 0.5) 65%,
+            rgba(197, 90, 61, 0) 100%
         );
         -webkit-mask:
             linear-gradient(#000 0 0) content-box,
@@ -101,22 +107,40 @@
         pointer-events: none;
     }
     .btn-gold {
-        background: #d4af37;
-        color: #0a0a0c;
-        transition: background-color 0.18s ease, transform 0.18s ease;
+        background: #c55a3d;
+        color: #fcf9f0;
+        transition: background-color 0.18s ease, transform 0.18s ease,
+            box-shadow 0.18s ease;
+        box-shadow: 0 6px 18px -8px rgba(197, 90, 61, 0.55);
     }
     .btn-gold:hover {
-        background: #e5c158;
+        background: #dc6e4e;
         transform: translateY(-1px);
+        box-shadow: 0 12px 24px -10px rgba(197, 90, 61, 0.6);
     }
     .btn-ghost {
-        color: #f5f5f5;
-        border: 1px solid #27272a;
-        transition: border-color 0.18s ease, background-color 0.18s ease;
+        color: #1e3a5f;
+        background: #ffffff;
+        border: 1px solid #e8dfc7;
+        transition: border-color 0.18s ease, background-color 0.18s ease,
+            transform 0.18s ease;
     }
     .btn-ghost:hover {
-        border-color: #d4af37;
-        background: rgba(212, 175, 55, 0.06);
+        border-color: #c55a3d;
+        background: #fff5ef;
+        transform: translateY(-1px);
+    }
+    .chip-sold {
+        background: #6b8e5a;
+        color: #fcf9f0;
+    }
+    /* Sun-glow decoration used behind the hero image */
+    .sun-glow {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(60px);
+        opacity: 0.5;
+        pointer-events: none;
     }
 }
 
