@@ -1,0 +1,125 @@
+{
+  "theme_and_identity": {
+    "archetype": "ARCHETYPE 4: SWISS & HIGH-CONTRAST mixed with LUXURY (Premium, Depth, Mystery)",
+    "mode": "dark",
+    "vibe": "Authority, Clarity, Exclusivity, Anti-Corporate",
+    "primary_directive": "Create a rich, dark-mode real estate experience that feels like an exclusive members club, directly contrasting with the bright, generic 'Zillow' aesthetic. Emphasize trust through stark contrasts, gold accents, and transparent escrow mechanics."
+  },
+  "typography": {
+    "headings": {
+      "family": "Cabinet Grotesk",
+      "style": "Swiss Brutalist (Radical weight contrast, e.g., Light vs Black)",
+      "tracking": "tracking-tighter",
+      "line_height": "leading-none",
+      "max_size": "text-5xl sm:text-6xl"
+    },
+    "body": {
+      "family": "IBM Plex Sans",
+      "style": "Clean, sterile, highly legible",
+      "line_height": "leading-relaxed"
+    },
+    "rules": [
+      "DO NOT use Inter, Roboto, Open Sans, Lato for Headings.",
+      "Headings (Size > 32px) MUST use tight letter spacing.",
+      "Overlines / Labels MUST be Uppercase + Tiny + Wide Spacing (tracking-[0.2em]).",
+      "The jump between a heading and its subheading must not exceed 2 Tailwind steps."
+    ]
+  },
+  "colors": {
+    "background": "#0A0A0C",
+    "surface": "#121217",
+    "surface_glass": "rgba(18, 18, 23, 0.7)",
+    "primary": "#D4AF37",
+    "primary_hover": "#E5C158",
+    "accent": "#FF3B30",
+    "text_main": "#F5F5F5",
+    "text_muted": "#8A8A93",
+    "border": "#27272A",
+    "rules": [
+      "Never use pure #000000 or #808080. Always tint neutral greys.",
+      "Never use generic full-screen gradients.",
+      "Hover state color must be a lighter hue of ACTIVE state color.",
+      "Use Signal Red sparingly for anti-corporate warnings, blacklists, or critical escrow alerts."
+    ]
+  },
+  "visual_enhancers": {
+    "surface_strategies": {
+      "headers": "GLASSMORPHISM (The 'Crystal' Variant) with backdrop-blur-xl and bg-[#121217]/70. 1px delicate inner stroke (border-white/10).",
+      "escrow_cards": "THE 'TRACING BEAM' - a glowing border effect for high-conversion contracts and escrow commitments.",
+      "dashboard_widgets": "NEUMORPHISM (The 'Tactile' Variant) - mix soft shadows with sharp inner contrasts, sharp 1px border to ground it."
+    },
+    "textures": "Subtle noise/grain overlay on hero sections to kill digital flatness."
+  },
+  "grids_and_layouts": {
+    "marketing_pages": "MODE A: THE 'TETRIS' GRID. Asymmetry, Visual Tension, wide gaps (gap-8 to gap-12). Never fill 100% of the grid perfectly.",
+    "dashboard_pages": "MODE B: High Density Grid. gap-4 or gap-6. Every pixel must be utilized with flat solid surfaces.",
+    "spacing_philosophy": "Generous Spacing (Tailwind Scale: p-6, p-8, p-12, p-16, p-24). Containers with borders must have internal padding (p-6 or p-8).",
+    "rules": [
+      "Optical Alignment over geometrical alignment.",
+      "Mobile-First: Always start with grid-cols-1.",
+      "Grid items must be direct children. Override default stretch with align-items: start."
+    ]
+  },
+  "component_rules": {
+    "buttons": "Pill-shaped or sharp rectangular. If primary, use Gold with black text. Hover state must be lighter hue with subtle lift.",
+    "cards": "Flat background, 1px subtle border, no shadow by default. Hover adds shadow-lg and -translate-y-1.",
+    "forms": "Use Shadcn components heavily customized. Dark inputs with 1px border. Focus state: border-gold ring-1 ring-gold.",
+    "navigation": "Always visible navigation links on desktop. Sticky header with glassmorphism.",
+    "tables_and_lists": "Use Shadcn UI components for data-heavy dashboard views. Grid borders to expose the skeleton."
+  },
+  "motion": {
+    "interactions": "Hover states on all interactive elements. Entrance animations staggered for lead lists. Smooth transitions (e.g., transition: transform 0.2s ease, opacity 0.2s ease).",
+    "marquee": "Use react-fast-marquee for an 'Editorial Ribbon' showing 'Zero Risk • Local Experts • 6% Escrow Secured' in pale background with dark earthy text.",
+    "accessibility": "Respect prefers-reduced-motion. Focus states must have higher contrast."
+  },
+  "accessibility": {
+    "contrast": "Ensure minimum 4.5:1 ratio for normal text. Use text shadow over images.",
+    "testing": "All interactive and key informational elements MUST include a `data-testid` attribute (e.g., `data-testid=\"lead-submit-button\"`).",
+    "motion": "Respect prefers-reduced-motion."
+  },
+  "media": {
+    "image_urls": {
+      "hero_background": {
+        "url": "https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODR8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwwfHx8fDE3ODUzNjY3NDR8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract low angle modern architecture for hero background. Use with heavy bg-black/50 overlay."
+      },
+      "luxury_house": {
+        "url": "https://images.pexels.com/photos/7031406/pexels-photo-7031406.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Backyard view of a modern luxurious cottage, to be used in the buyer/seller section to represent high-quality leads."
+      },
+      "agent_portrait_1": {
+        "url": "https://images.unsplash.com/photo-1647580427155-0483906cb9de?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZWFsJTIwZXN0YXRlJTIwYWdlbnQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODUzNjY3NDR8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional male agent in suit for 'Local Independent Experts' section."
+      },
+      "agent_portrait_2": {
+        "url": "https://images.unsplash.com/photo-1581065178047-8ee15951ede6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjByZWFsJTIwZXN0YXRlJTIwYWdlbnQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODUzNjY3NDR8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Professional female agent in blazer for 'Local Independent Experts' section."
+      },
+      "contract_signing": {
+        "url": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxzaWduaW5nJTIwY29udHJhY3QlMjBjbG9zZSUyMHVwfGVufDB8fHx8MTc4NTM2Njc0NHww&ixlib=rb-4.1.0&q=85",
+        "description": "Close up of signing contract for the 'Escrow Security and Binding Agreements' section."
+      }
+    },
+    "rules": [
+      "Mobile Height Limit: Images MUST NOT exceed 80vh on mobile devices.",
+      "Max overlay opacity: bg-black/50. If the image isn't visible through the overlay, you're wasting it."
+    ]
+  },
+  "libraries": {
+    "icons": "lucide-react",
+    "animations": "framer-motion",
+    "notifications": "sonner",
+    "components": "shadcn/ui"
+  },
+  "instructions_to_main_agent": [
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Do not center-align the main app container. Use left-alignment for body and dense content.",
+    "Use glassmorphism (backdrop-blur-xl bg-black/60) for sticky headers. Never use fully transparent headers over content.",
+    "Ensure dark mode is the default and only theme.",
+    "Do not use default generic HTML inputs; use Shadcn UI components for forms (Input, Select, Form).",
+    "For the Escrow/Contract signature step, build a clean, high-contrast digital signature UI with a clear 'Typed Signature' input field.",
+    "Never use Zillow brand colors (Blue/Green combos) – stick strictly to the Midnight Blue/Gold/Signal Red palette to reinforce the anti-corporate stance.",
+    "Add 'data-testid' to all interactive elements for robust testing."
+  ],
+  "universal_guidelines_for_main_agent": "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight. Create depth through layered design elements with z-index hierarchy. Use glass-morphism effects with backdrop filters. DO NOT apply universal transition (e.g., transition: all). DO NOT center align the app container. Always use modern button styles (pill-shaped or sharp). NEVER use AI assistant Emoji characters for icons. Every interaction needs micro-animations. Use 2-3x more spacing than feels comfortable."
+}
