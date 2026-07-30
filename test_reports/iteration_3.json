@@ -1,0 +1,14 @@
+{
+  "summary": "Re-ran full backend suite after fix to build_agent_contract_pdf sections 1-7. All 27 tests pass including the previously-failing TestPDFContent::test_agent_contract_pdf_marketing_wording. Agent PDF now contains all four required phrases (case-insensitive): 'marketing service', 'agent's own commission', 'home warranty', 'marketing fee'. Client PDF still contains 'one-year home warranty' and 'marketing fee equal to six percent (6%) of the agent's own commission'. Rest of iteration_2 suite (close-deal math, warranty default/negative/over-5000 rejection, admin/agent deals shape, auth, leads, admin flow) all remain green.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/iteration_3.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (27/27)", "frontend": "not tested (skipped per request)"},
+  "seed_data_creation": "None (uses existing admin perkinsappraisal@gmail.com)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "iteration_2 identified one failing test in TestPDFContent for agent-contract PDF wording. Iteration 3 confirms the fix: 27/27 pass in 8.66s. No further action needed on this thread."
+}

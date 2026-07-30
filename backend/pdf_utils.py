@@ -75,53 +75,68 @@ def build_agent_contract_pdf(*, agent_name, agent_email, brokerage,
     story.append(tbl)
     story.append(Spacer(1, 14))
 
-    story.append(Paragraph("1. Grant of Leads", ss["H2"]))
+    story.append(Paragraph("1. Nature of Service — Marketing", ss["H2"]))
     story.append(Paragraph(
-        "AgentEscrow ('Platform') will refer qualifying buyer and seller leads "
-        "to the undersigned licensed real estate agent ('Agent') in the Agent's "
-        "declared service area. The Platform makes no guarantee of lead volume "
-        "or conversion.", ss["Body"]))
+        "AgentEscrow ('Platform') is a <b>marketing service</b> that refers "
+        "qualifying buyer and seller leads to the undersigned licensed real "
+        "estate agent ('Agent') in the Agent's declared service area. This is "
+        "not an escrow, brokerage, or title service. No lead volume or "
+        "conversion is guaranteed.", ss["Body"]))
 
-    story.append(Paragraph("2. Compensation — Six Percent (6%) of Net Commission", ss["H2"]))
+    story.append(Paragraph("2. Marketing Fee — 6% of the Agent's Own Commission", ss["H2"]))
     story.append(Paragraph(
         "In consideration for each closed transaction that originated from a "
-        "Platform-supplied lead, the Agent agrees to pay the Platform an amount "
-        "equal to <b>six percent (6%) of the Agent's Gross Commission LESS the "
-        "Broker Fee</b> actually charged by Agent's brokerage for the same "
-        "transaction. Formally: <i>Escrow Amount = 0.06 × (Gross Commission − Broker Fee)</i>.",
-        ss["Body"]))
+        "Platform-supplied lead, the Agent agrees to pay the Platform a "
+        "marketing fee equal to <b>six percent (6%) of the agent's own "
+        "commission</b> on that transaction, where the agent's own commission "
+        "means the Gross Commission LESS the Broker Fee actually charged by "
+        "Agent's brokerage. Formally: <i>Marketing Fee = 0.06 × "
+        "(Gross Commission − Broker Fee)</i>.", ss["Body"]))
 
-    story.append(Paragraph("3. Escrow Collection at Closing", ss["H2"]))
+    story.append(Paragraph("3. Home Warranty for the Client — Paid by Agent", ss["H2"]))
     story.append(Paragraph(
-        "The Agent shall instruct the closing/settlement agent (title company, "
-        "escrow officer, or closing attorney) to disburse the Escrow Amount "
-        "directly to the Platform out of closing funds, prior to release of "
-        "the Agent's net commission. Payment is due at the closing of the "
-        "referenced transaction and is <b>only owed if a transaction closes</b>. "
+        "In addition to the marketing fee, Agent agrees to <b>purchase and "
+        "fund a one-year home warranty for the client</b> from a warranty "
+        "provider of the Platform's choosing. The default warranty premium is "
+        "<b>$600.00</b> per closed transaction; the actual amount is confirmed "
+        "at the time of closing. This home warranty is a benefit the client "
+        "receives at no cost in exchange for signing the platform's binding "
+        "escrow consent.", ss["Body"]))
+
+    story.append(Paragraph("4. Closing Disbursement", ss["H2"]))
+    story.append(Paragraph(
+        "The Agent shall instruct the closing / settlement agent (title "
+        "company, escrow officer, or closing attorney) to disburse, out of "
+        "closing funds and prior to release of Agent's own commission: "
+        "(a) the marketing fee to AgentEscrow, and (b) the home warranty "
+        "premium to the designated home warranty provider. Formally: "
+        "<i>Total Closing Disbursement = 0.06 × (Gross Commission − "
+        "Broker Fee) + Home Warranty Premium</i>. Both amounts are due "
+        "only at closing and are <b>only owed if a transaction closes</b>. "
         "No lead fees, subscription fees, or up-front payments are collected.",
         ss["Body"]))
 
-    story.append(Paragraph("4. Zillow / Corporate iBuyer Exclusion", ss["H2"]))
+    story.append(Paragraph("5. Zillow / Corporate iBuyer Exclusion", ss["H2"]))
     story.append(Paragraph(
-        "Agent attests, under this agreement, that Agent is <b>not employed by, "
-        "contracted to, or economically affiliated with Zillow Group, Trulia, "
-        "Redfin, Opendoor, Offerpad, or any brokerage operating under a "
-        "corporate iBuyer or platform-owned lead-farm structure</b>. Any material "
-        "misrepresentation constitutes an immediate breach and forfeiture of "
-        "leads and any earned payouts.", ss["Body"]))
+        "Agent attests that Agent is <b>not employed by, contracted to, or "
+        "economically affiliated with Zillow Group, Trulia, Redfin, Opendoor, "
+        "Offerpad, or any brokerage operating under a corporate iBuyer or "
+        "platform-owned lead-farm structure</b>. Any material misrepresentation "
+        "constitutes an immediate breach and forfeiture of leads and any "
+        "earned payouts.", ss["Body"]))
 
-    story.append(Paragraph("5. Reporting and Audit", ss["H2"]))
+    story.append(Paragraph("6. Reporting and Audit", ss["H2"]))
     story.append(Paragraph(
         "Agent shall report closed transactions within seven (7) days of "
         "closing. Platform reserves the right to verify closings against "
         "public records and MLS data. Under-reporting or non-reporting is a "
         "material breach.", ss["Body"]))
 
-    story.append(Paragraph("6. Risk-Free Terms", ss["H2"]))
+    story.append(Paragraph("7. Risk-Free Terms", ss["H2"]))
     story.append(Paragraph(
         "If a lead does not close a transaction, Agent owes the Platform "
-        "nothing. There are no cancellation fees or ongoing obligations.",
-        ss["Body"]))
+        "nothing and no home warranty is purchased. There are no cancellation "
+        "fees or ongoing obligations.", ss["Body"]))
 
     story.append(Spacer(1, 16))
     story.append(HRFlowable(width="100%", thickness=0.75, color=GOLD, spaceAfter=10))
