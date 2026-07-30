@@ -240,23 +240,30 @@ export default function LeadForm() {
             </div>
             <div className="space-y-4 text-fog leading-relaxed max-h-72 overflow-y-auto pr-3 text-sm">
               <p><strong className="text-ink">1. Purpose.</strong> You've requested a
-              local, non-corporate agent referral from AgentEscrow.</p>
-              <p><strong className="text-ink">2. Escrow Consent.</strong> You
-              irrevocably instruct the closing / settlement agent of the resulting
-              transaction to disburse to AgentEscrow, from the agent's commission
-              at closing, an amount equal to
-              <span className="text-gold"> six percent (6%) of the agent's Gross
-              Commission LESS the Broker Fee </span> — deducted from the agent's
-              commission only, not from your proceeds or purchase funds.</p>
-              <p><strong className="text-ink">3. Binding.</strong> You will not
-              instruct the closing agent to withhold this disbursement.</p>
-              <p><strong className="text-ink">4. No Escrow Service.</strong>
+              local, non-corporate agent referral from AgentEscrow — a marketing
+              service that connects clients to trusted local agents.</p>
+              <p><strong className="text-ink">2. What you get.</strong> A vetted
+              local agent within an hour of your home,{" "}
+              <span className="text-gold font-semibold">plus a 1-year home
+              warranty at no cost to you</span>, paid for by the agent at
+              closing.</p>
+              <p><strong className="text-ink">3. Escrow Consent.</strong> You
+              irrevocably instruct the closing / settlement agent of the
+              resulting transaction to disburse (a) a marketing fee of
+              <span className="text-gold"> six percent (6%) of the agent's own
+              commission</span> to AgentEscrow, and (b) the premium for your
+              1-year home warranty — <em>both out of the agent's commission at
+              closing</em>. These amounts do not come from your proceeds or
+              purchase funds.</p>
+              <p><strong className="text-ink">4. Binding.</strong> You will not
+              instruct the closing agent to withhold either disbursement.</p>
+              <p><strong className="text-ink">5. Not an Escrow Holder.</strong>
               AgentEscrow is not itself a licensed escrow holder. Actual escrow,
               title and settlement services are performed by a licensed third
               party of your or the agent's choosing.</p>
-              <p><strong className="text-ink">5. No Sale, No Obligation.</strong>
-              If the transaction does not close, nothing is owed under this
-              agreement.</p>
+              <p><strong className="text-ink">6. No Sale, No Obligation.</strong>
+              If the transaction does not close, nothing is owed and no home
+              warranty is purchased.</p>
             </div>
           </div>
 
@@ -273,8 +280,9 @@ export default function LeadForm() {
             <span className="text-sm text-ink">
               I have read the above and I <strong className="text-gold">agree
               </strong>{" "}
-              to the binding escrow consent described. I understand this
-              consent is enforceable at closing.
+              to the binding escrow consent above. I understand this consent
+              is enforceable at closing and I will receive a 1-year home
+              warranty at no cost to me.
             </span>
           </label>
 

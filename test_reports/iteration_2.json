@@ -1,0 +1,41 @@
+{
+  "summary": "Iteration 2 e2e retest of MARKETING SERVICE reframe + home warranty. Backend: 26/27 tests passed (1 real bug found: agent contract PDF body still uses old 'escrow' / 'net commission' language and never mentions 'home warranty' — client PDF is correct, and the agent PDF *title* was updated but sections 2-6 in /app/backend/pdf_utils.py::build_agent_contract_pdf were not). Frontend: landing hero-sub/marquee/pillar-escrow/chip/floating card all show the new marketing-service+home-warranty copy exactly as spec. Agent close-deal-dialog: close-warranty defaults to 600, preview shows Your commission $15,960, − Marketing fee (6%) −$958, − Home warranty (client) −$600, Your take-home $14,402 (matches expected). Admin deals table shows AGENT COMMISSION / MARKETING FEE (6%) / HOME WARRANTY columns; stat card shows MARKETING FEE PIPELINE. Agent deals table shows YOUR COMMISSION / MARKETING FEE (6%) / HOME WARRANTY columns.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "GET /api/contracts/{id}/pdf (agent contract)",
+        "issue": "build_agent_contract_pdf in /app/backend/pdf_utils.py only updated the TITLE to 'Agent Marketing Service & Closing Escrow Agreement'. Body sections 2-6 still say 'Compensation — Six Percent (6%) of Net Commission', 'Escrow Amount = 0.06 × (Gross Commission − Broker Fee)', 'Escrow Collection at Closing', 'Risk-Free Terms'. The PDF NEVER mentions 'home warranty' and does not use the phrase 'marketing service' inside the body or '6% of the agent's own commission'. Per the review request, agent PDF must mention: 'marketing service', '6% of the agent's own commission', and 'home warranty'. Client PDF is correct. This is a real content bug that the review request explicitly called out.",
+        "priority": "HIGH"
+      }
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Update /app/backend/pdf_utils.py::build_agent_contract_pdf sections 2-7 to (a) rename compensation section from 'Six Percent (6%) of Net Commission' to 'Marketing Fee — 6% of the agent's own commission' with the phrase 'marketing service' in section 1, (b) add a section describing the agent-funded 1-year home warranty at no cost to the client (mirroring client PDF sections 2 & 3), (c) update 'Escrow Amount = 0.06 × ...' formula to 'Total Closing Disbursement = 0.06 × (Gross Commission − Broker Fee) + Home Warranty Premium'."
+  ],
+  "critical_code_review_comments": [
+    "server.py stores three overlapping fields for commission (net_commission, agent_commission) and two for marketing (marketing_fee, escrow_amount) for legacy FE compat — flag for cleanup once FE fully migrated.",
+    "server.py uses @app.on_event('startup'/'shutdown') which is deprecated in FastAPI ≥0.109 — migrate to lifespan handler.",
+    "server.py cookie SameSite=None with Secure=True is correct for cross-site preview, but hardcoded — consider driving from env for local dev.",
+    "pdf_utils.py agent PDF was only half-updated for the iteration-2 reframe (see critical bug above)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py (added TestWarranty class for default/negative/>5000 warranty; extended TestAgentFlow.test_close_deal_math to assert marketing_fee/home_warranty_amount/total_escrow_disbursement/agent_commission on both close response AND GET /agent/deals; added TestAdminDeals; added TestPDFContent for agent+client PDF wording; added street_address to lead payload; loaded REACT_APP_BACKEND_URL from frontend/.env)"
+  ],
+  "success_rate": {"backend": "96% (26/27 passed, 1 pdf-content failure)", "frontend": "100%"},
+  "test_credentials": "Admin: perkinsappraisal@gmail.com / ChangeMe!2026",
+  "seed_data_creation": "Created ~4 TEST_ prefixed agents + leads + deals during pytest and 1 additional UI-flow agent (TEST_uiagent_1785370693@example.com / Passw0rd!) approved and assigned a lead but NOT closed (dialog opened only).",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Only remaining item is agent PDF wording bug (see backend_issues.critical). Everything else — landing copy, agent close-deal-dialog preview math (760k/3%/30%/600 → $14,402 take-home), admin deals table columns, agent deals table columns, close-deal API math with warranty defaulting to 600, validation of negative/>5000, backward-compat aliases (net_commission, escrow_amount) — all verified working. pypdf was pip-installed in the container for PDF text extraction; the TestPDFContent test class relies on it. Run tests with: pytest /app/backend/tests/backend_test.py -v -n 0 --junitxml=/app/test_reports/pytest/pytest_results.xml",
+  "rca of the issue": "iteration-2 pdf_utils.py change updated only the title string of build_agent_contract_pdf (line 53) but left the section-2 through section-6 Paragraph() blocks unchanged from iteration-1. E1 likely edited only the title and assumed sections propagated. Reproduction: log in as admin, GET /api/contracts/<agent_contract_id>/pdf, extract text — you will see the phrase 'Escrow Amount = 0.06 × (Gross Commission − Broker Fee)' and 'Six Percent (6%) of Net Commission' with zero occurrences of 'home warranty' or 'agent's own commission'. Mitigation: rewrite sections 2-6 of build_agent_contract_pdf to mirror the language pattern already applied to build_client_contract_pdf sections 2-3 (which do mention 'marketing fee equal to six percent (6%) of the agent's own commission' and 'one-year home warranty')."
+}

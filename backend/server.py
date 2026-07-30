@@ -40,7 +40,9 @@ ADMIN_EMAIL = os.environ["ADMIN_EMAIL"].lower()
 ADMIN_PASSWORD = os.environ["ADMIN_PASSWORD"]
 JWT_ALGO = "HS256"
 ACCESS_TTL = timedelta(hours=8)
-TERMS_VERSION = "v1.0"
+TERMS_VERSION = "v1.1"                       # bumped for home-warranty addendum
+MARKETING_FEE_PCT = 0.06                      # 6% of agent's commission (gross − broker fee)
+HOME_WARRANTY_DEFAULT = 600.0                 # default 1-year home warranty cost, USD
 
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
@@ -185,6 +187,7 @@ class CloseDealIn(BaseModel):
     gross_commission_percent: float = Field(gt=0, le=25)
     broker_fee_percent: float = Field(ge=0, le=100)  # percent OF gross commission
     closing_date: str  # ISO date string
+    home_warranty_amount: float = Field(default=HOME_WARRANTY_DEFAULT, ge=0, le=5000)
 
 
 # ---------- Startup ----------
@@ -508,8 +511,11 @@ async def agent_close_lead(lead_id: str, body: CloseDealIn,
 
     gross_commission = body.sale_price * (body.gross_commission_percent / 100.0)
     broker_fee = gross_commission * (body.broker_fee_percent / 100.0)
-    net_commission = gross_commission - broker_fee
-    escrow_amount = round(net_commission * 0.06, 2)
+    agent_commission = gross_commission - broker_fee            # what agent actually earns
+    marketing_fee = round(agent_commission * MARKETING_FEE_PCT, 2)  # 6% of agent commission
+    home_warranty = round(body.home_warranty_amount, 2)
+    total_escrow_disbursement = round(marketing_fee + home_warranty, 2)
+    agent_net_after_platform = round(agent_commission - total_escrow_disbursement, 2)
 
     deal = {
         "lead_id": lead_id,
@@ -519,8 +525,13 @@ async def agent_close_lead(lead_id: str, body: CloseDealIn,
         "gross_commission_amount": round(gross_commission, 2),
         "broker_fee_percent": body.broker_fee_percent,
         "broker_fee_amount": round(broker_fee, 2),
-        "net_commission": round(net_commission, 2),
-        "escrow_amount": escrow_amount,
+        "net_commission": round(agent_commission, 2),           # legacy field name kept for FE compat
+        "agent_commission": round(agent_commission, 2),
+        "marketing_fee": marketing_fee,
+        "escrow_amount": marketing_fee,                         # legacy alias — the 6% marketing fee
+        "home_warranty_amount": home_warranty,
+        "total_escrow_disbursement": total_escrow_disbursement,
+        "agent_net_after_platform": agent_net_after_platform,
         "closing_date": body.closing_date,
         "escrow_status": "pending",
         "created_at": now_iso(),
@@ -529,7 +540,10 @@ async def agent_close_lead(lead_id: str, body: CloseDealIn,
     await db.leads.update_one({"_id": ObjectId(lead_id)},
                               {"$set": {"status": "closed", "closed_at": now_iso()}})
     return {"ok": True, "deal_id": str(result.inserted_id),
-            "escrow_amount": escrow_amount, "net_commission": round(net_commission, 2)}
+            "marketing_fee": marketing_fee,
+            "home_warranty_amount": home_warranty,
+            "total_escrow_disbursement": total_escrow_disbursement,
+            "agent_commission": round(agent_commission, 2)}
 
 
 @api.get("/agent/deals")

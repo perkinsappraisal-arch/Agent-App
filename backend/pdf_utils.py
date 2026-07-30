@@ -50,7 +50,7 @@ def build_agent_contract_pdf(*, agent_name, agent_email, brokerage,
     story = []
 
     story.append(Paragraph("AGENTESCROW", ss["OverLine"]))
-    story.append(Paragraph("Agent Lead &amp; Commission Escrow Agreement", ss["TitleBig"]))
+    story.append(Paragraph("Agent Marketing Service &amp; Closing Escrow Agreement", ss["TitleBig"]))
     story.append(HRFlowable(width="100%", thickness=1, color=GOLD, spaceAfter=14))
 
     party_data = [
@@ -153,7 +153,6 @@ def build_client_contract_pdf(*, client_name, client_email, client_role,
     story.append(Paragraph("AGENTESCROW", ss["OverLine"]))
     story.append(Paragraph("Client Escrow Consent &amp; Binding Agreement", ss["TitleBig"]))
     story.append(HRFlowable(width="100%", thickness=1, color=GOLD, spaceAfter=14))
-
     party_data = [
         ["Client Name", client_name],
         ["Client Email", client_email],
@@ -180,27 +179,41 @@ def build_client_contract_pdf(*, client_name, client_email, client_role,
     story.append(Paragraph(
         "The undersigned ('Client') is a prospective buyer or seller who has "
         "requested a local, non-corporate real estate agent referral from "
-        "AgentEscrow ('Platform').", ss["Body"]))
+        "AgentEscrow ('Platform'), which is a <b>marketing service</b> that "
+        "connects clients with independent local agents.", ss["Body"]))
 
-    story.append(Paragraph("2. Client Escrow Consent", ss["H2"]))
+    story.append(Paragraph("2. What the Client Receives", ss["H2"]))
+    story.append(Paragraph(
+        "Client will be matched with a vetted independent local agent "
+        "(non-corporate, non-Zillow-structure) who lives within an hour of "
+        "the Client's property or search area. In addition, upon closing of "
+        "the resulting transaction, the Client receives a <b>one-year home "
+        "warranty at no cost to the Client</b>, purchased and funded by the "
+        "referred agent out of the agent's commission at closing.",
+        ss["Body"]))
+
+    story.append(Paragraph("3. Client Escrow Consent", ss["H2"]))
     story.append(Paragraph(
         "Client acknowledges and irrevocably consents that, at closing of the "
-        "resulting real estate transaction, a portion of the referred agent's "
-        "commission — equal to <b>six percent (6%) of the agent's Gross "
-        "Commission LESS the Broker Fee</b> — will be disbursed by the "
-        "closing/settlement agent directly to the Platform out of the same "
-        "closing funds. This disbursement <b>does not increase Client's cost</b>; "
-        "it is deducted from the agent's commission, not from Client's proceeds "
-        "or purchase funds.", ss["Body"]))
+        "resulting real estate transaction, the closing / settlement agent "
+        "shall disburse the following amounts to the Platform (and its "
+        "designated home warranty provider) out of the referred agent's "
+        "commission, prior to release of the agent's net proceeds: (a) a "
+        "<b>marketing fee equal to six percent (6%) of the agent's own "
+        "commission</b> (Gross Commission − Broker Fee), and (b) the premium "
+        "for the Client's <b>one-year home warranty</b>. These disbursements "
+        "come from the agent's commission — <b>not</b> from Client's proceeds, "
+        "purchase funds, or closing costs — and do not increase Client's cost "
+        "of the transaction.", ss["Body"]))
 
-    story.append(Paragraph("3. Binding Nature", ss["H2"]))
+    story.append(Paragraph("4. Binding Nature", ss["H2"]))
     story.append(Paragraph(
         "Client agrees this consent is binding and shall be honored as a "
         "written instruction to the closing agent. Client shall not instruct "
-        "the closing agent to withhold this disbursement.",
+        "the closing agent to withhold either disbursement.",
         ss["Body"]))
 
-    story.append(Paragraph("4. No Escrow Service Provided", ss["H2"]))
+    story.append(Paragraph("5. Platform Is Not an Escrow Holder", ss["H2"]))
     story.append(Paragraph(
         "AgentEscrow itself does <b>not</b> act as a licensed escrow holder. "
         "This document is a written disbursement instruction to the closing "
@@ -208,11 +221,11 @@ def build_client_contract_pdf(*, client_name, client_email, client_role,
         "and settlement services are performed by a licensed third party of "
         "Client's or Agent's choosing.", ss["Body"]))
 
-    story.append(Paragraph("5. Contingent — No Sale, No Obligation", ss["H2"]))
+    story.append(Paragraph("6. Contingent — No Sale, No Obligation", ss["H2"]))
     story.append(Paragraph(
         "If the transaction does not close, no amount is owed under this "
-        "agreement. This is a risk-free lead operation for both Client and Agent.",
-        ss["Body"]))
+        "agreement and no home warranty is purchased. This is a risk-free "
+        "referral for both Client and Agent.", ss["Body"]))
 
     story.append(Spacer(1, 16))
     story.append(HRFlowable(width="100%", thickness=0.75, color=GOLD, spaceAfter=10))

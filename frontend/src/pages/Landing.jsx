@@ -36,12 +36,13 @@ export default function Landing() {
               className="mt-6 text-lg text-navy/70 leading-relaxed max-w-lg animate-reveal"
               data-testid="hero-sub"
             >
-              AgentEscrow connects real buyers and sellers with{" "}
-              <span className="text-navy font-semibold">trusted local agents
-              who live within an hour of your home</span>. Agents pay{" "}
-              <span className="text-gold font-semibold">6% of net commission</span>{" "}
-              — only when the house actually sells. Cheerful, closing-secured,
-              corporate-free.
+              A <span className="text-navy font-semibold">marketing service</span> that
+              connects real buyers and sellers with{" "}
+              <span className="text-navy font-semibold">trusted local agents within
+              an hour of your home</span>. Agents pay a{" "}
+              <span className="text-gold font-semibold">6% marketing fee + a
+              1-year home warranty for you</span> — only when the house
+              actually sells.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/leads/new" data-testid="hero-cta-lead">
@@ -57,7 +58,7 @@ export default function Landing() {
             </div>
             <div className="mt-10 flex items-center gap-6 text-navy/70 text-sm flex-wrap">
               <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-sage" /> Within 1 hour of you</span>
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-gold" /> No fees up-front</span>
+              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-gold" /> 1-yr home warranty for you</span>
               <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-rose" /> No Zillow · local only</span>
             </div>
           </div>
@@ -75,11 +76,11 @@ export default function Landing() {
             </div>
             {/* Floating stat card */}
             <div className="hidden md:block absolute -bottom-8 -left-6 rounded-2xl p-5 bg-surface border border-hairline shadow-xl animate-float">
-              <div className="overline">Escrow to platform</div>
+              <div className="overline">Recent $760k close</div>
               <div className="mt-1 font-display text-3xl font-black tracking-mega text-gold">
-                $18,240
+                $1,558
               </div>
-              <div className="text-navy/60 text-xs mt-0.5">on a recent $760k close</div>
+              <div className="text-navy/60 text-xs mt-0.5">6% marketing fee + 1-yr warranty</div>
             </div>
             <div className="hidden md:block absolute -top-4 -right-4 rounded-2xl p-4 bg-surface border border-hairline shadow-xl animate-float" style={{ animationDelay: "1.2s" }}>
               <div className="flex items-center gap-2">
@@ -94,11 +95,11 @@ export default function Landing() {
       <Marquee
         items={[
           "Trusted local agents within an hour",
-          "Zero risk to agents",
-          "6% escrow secured",
+          "1-year home warranty for the client",
+          "6% marketing fee — only at closing",
           "Local independent brokerages",
           "No Zillow. No Redfin. No Opendoor.",
-          "Paid at closing — never before",
+          "Zero risk to agents",
         ]}
       />
 
@@ -140,17 +141,18 @@ export default function Landing() {
               <ScrollText className="h-5 w-5 text-sage-lo" strokeWidth={2} />
             </div>
             <h3 className="mt-6 font-display text-3xl font-bold tracking-tight text-navy">
-              6% of net commission — via closing escrow
+              6% marketing fee — plus a home warranty
             </h3>
             <p className="mt-4 text-navy/70 leading-relaxed">
-              The agreed fee is exactly six percent of your gross commission{" "}
-              <em>less your broker fee</em>, disbursed directly by the closing
-              agent to AgentEscrow at settlement. The buyer or seller
-              countersigns a binding consent so the closing agent honors the
-              instruction.
+              At closing, the settlement agent disburses two amounts out of
+              the agent's commission: a <span className="text-navy font-semibold">
+              6% marketing fee to AgentEscrow</span>, and the{" "}
+              <span className="text-navy font-semibold">premium for a 1-year
+              home warranty</span> that the platform arranges for the client.
+              Both come out of the agent's commission — not the client's proceeds.
             </p>
             <code className="mt-6 block rounded-xl bg-butter border border-hairline p-4 text-sm font-mono text-gold-lo">
-              Escrow Amount = 0.06 × (Gross Commission − Broker Fee)
+              Total from agent = 0.06 × (Gross Commission − Broker Fee) + Home Warranty
             </code>
           </div>
 
@@ -217,10 +219,12 @@ export default function Landing() {
           <div className="relative">
             <div className="rounded-3xl overflow-hidden border border-hairline shadow-[0_30px_60px_-30px_rgba(30,58,95,0.35)] bg-surface">
               <div className="p-8 sm:p-10 space-y-4">
-                <div className="overline">Buyer's escrow consent · v1.0</div>
+                <div className="overline">Buyer's escrow consent · v1.1</div>
                 <div className="font-display text-2xl font-bold text-navy leading-tight">
-                  I irrevocably instruct the closing agent to disburse 6% of
-                  the referred agent's net commission to AgentEscrow at closing.
+                  I irrevocably instruct the closing agent to disburse (a) 6%
+                  of the referred agent's commission to AgentEscrow and (b)
+                  the premium for my 1-year home warranty — all out of the
+                  agent's commission, at closing.
                 </div>
                 <div className="pt-3 border-t border-hairline">
                   <div className="text-navy/60 text-xs uppercase tracking-widest">Signed</div>
@@ -234,7 +238,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="absolute -top-4 -right-4 rounded-2xl px-4 py-2 bg-sage text-white shadow-md font-display text-sm font-bold rotate-3">
-              Enforceable at closing
+              Includes 1-yr home warranty
             </div>
           </div>
         </div>
@@ -246,7 +250,7 @@ export default function Landing() {
           {[
             { icon: HomeIcon, tone: "gold", n: "01", t: "Client submits lead", b: "Buyer or seller signs the binding escrow consent — nothing paid up front." },
             { icon: KeyRound, tone: "sage", n: "02", t: "Local agent matched — within an hour", b: "Admin assigns to a vetted independent agent who lives within an hour of your home. No Zillow. No corporate lead farms." },
-            { icon: Sparkles, tone: "rose", n: "03", t: "Only pays at closing", b: "6% of net commission is disbursed by the closing agent — only when the house sells." },
+            { icon: Sparkles, tone: "rose", n: "03", t: "Only pays at closing", b: "The agent's commission funds the 6% marketing fee to us and a 1-year home warranty for you — only when the house sells." },
           ].map((s) => (
             <div key={s.n} className="rounded-3xl p-8 bg-surface border border-hairline hover:-translate-y-1 transition-transform">
               <div className={`h-11 w-11 rounded-2xl flex items-center justify-center bg-${s.tone}/15`}>

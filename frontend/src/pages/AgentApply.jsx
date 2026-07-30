@@ -195,12 +195,13 @@ export default function AgentApply() {
               <div className="overline">Agent Lead & Commission Escrow Agreement · v1.0</div>
             </div>
             <div className="space-y-4 text-fog leading-relaxed max-h-72 overflow-y-auto pr-3 text-sm">
-              <p><strong className="text-ink">1. Grant of Leads.</strong> AgentEscrow will refer qualifying local buyer/seller leads. No lead volume is guaranteed.</p>
-              <p><strong className="text-ink">2. Compensation.</strong> Six percent (6%) of your gross commission LESS your broker fee — collected only via the closing agent, at closing.</p>
-              <p className="font-mono text-gold text-xs">Escrow Amount = 0.06 × (Gross Commission − Broker Fee)</p>
-              <p><strong className="text-ink">3. Zillow / Corporate iBuyer Exclusion.</strong> You attest you are not affiliated with Zillow Group, Trulia, Redfin, Opendoor, Offerpad, or any corporate iBuyer / platform-owned lead-farm.</p>
-              <p><strong className="text-ink">4. Risk-Free.</strong> If a lead doesn't close, nothing is owed. No fees. No subscriptions.</p>
-              <p><strong className="text-ink">5. Audit.</strong> Platform may verify closings against public and MLS records.</p>
+              <p><strong className="text-ink">1. Marketing service.</strong> AgentEscrow is a marketing service that refers qualifying local leads. No lead volume is guaranteed.</p>
+              <p><strong className="text-ink">2. Marketing fee — 6% of your commission.</strong> Six percent of your <em>own</em> commission (Gross Commission − Broker Fee), collected via the closing agent, only at closing.</p>
+              <p className="font-mono text-gold text-xs">Marketing Fee = 0.06 × (Gross Commission − Broker Fee)</p>
+              <p><strong className="text-ink">3. Home warranty for the client.</strong> You will additionally purchase a 1-year home warranty for the client (default $600, confirmed at closing), paid out of your commission at closing.</p>
+              <p><strong className="text-ink">4. Zillow / iBuyer exclusion.</strong> You attest you are not affiliated with Zillow, Trulia, Redfin, Opendoor, Offerpad, or any corporate iBuyer / platform-owned lead-farm.</p>
+              <p><strong className="text-ink">5. Risk-free.</strong> If a lead doesn't close, nothing is owed and no home warranty is purchased.</p>
+              <p><strong className="text-ink">6. Audit.</strong> Platform may verify closings against public and MLS records.</p>
             </div>
           </div>
 
@@ -211,7 +212,7 @@ export default function AgentApply() {
             My brokerage is an <strong className="text-ink">independent local firm</strong>, not a corporate iBuyer or platform-owned lead-farm.
           </Attest>
           <Attest testId="attest-will-pay" checked={form.attest_will_pay_escrow} onCheck={(v) => upd("attest_will_pay_escrow", v)}>
-            I will instruct my closing agent to disburse 6% of my net commission directly to AgentEscrow at closing for every lead-originated transaction.
+            I will instruct my closing agent to disburse, out of my commission at closing: (a) 6% of my commission to AgentEscrow as a marketing fee, and (b) the premium for the client's 1-year home warranty.
           </Attest>
 
           <Field label="Type your full legal name to sign" testId="agent-sign">

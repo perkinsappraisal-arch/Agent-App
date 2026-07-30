@@ -44,8 +44,8 @@ export default function AgentDashboard() {
 
   useEffect(() => { refresh(); }, []);
 
-  const totalEscrow = deals.reduce((s, d) => s + (d.escrow_amount || 0), 0);
-  const totalNet = deals.reduce((s, d) => s + (d.net_commission || 0), 0);
+  const totalEscrow = deals.reduce((s, d) => s + (d.marketing_fee ?? d.escrow_amount ?? 0), 0);
+  const totalNet = deals.reduce((s, d) => s + (d.agent_commission ?? d.net_commission ?? 0), 0);
 
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-10 py-12" data-testid="agent-dashboard">
@@ -60,9 +60,9 @@ export default function AgentDashboard() {
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Stat icon={Home} label="Assigned leads" value={leads.length} testId="stat-leads" />
         <Stat icon={DollarSign} label="Closed deals" value={deals.length} testId="stat-deals" />
-        <Stat icon={TrendingUp} label="Escrow due to platform"
-              value={`$${totalEscrow.toLocaleString(undefined, {maximumFractionDigits: 0})}`}
-              sub={`Your net: $${totalNet.toLocaleString(undefined, {maximumFractionDigits: 0})}`}
+        <Stat icon={TrendingUp} label="Marketing fees + warranties"
+              value={`$${(deals.reduce((s, d) => s + (d.total_escrow_disbursement ?? d.escrow_amount ?? 0), 0)).toLocaleString(undefined, {maximumFractionDigits: 0})}`}
+              sub={`Your take-home total: $${(totalNet - totalEscrow - deals.reduce((s, d) => s + (d.home_warranty_amount ?? 0), 0)).toLocaleString(undefined, {maximumFractionDigits: 0})}`}
               testId="stat-escrow" />
       </div>
 
@@ -135,23 +135,25 @@ export default function AgentDashboard() {
                 <TableHead className="text-fog uppercase text-xs tracking-widest">Sale price</TableHead>
                 <TableHead className="text-fog uppercase text-xs tracking-widest">Gross commission</TableHead>
                 <TableHead className="text-fog uppercase text-xs tracking-widest">Broker fee</TableHead>
-                <TableHead className="text-fog uppercase text-xs tracking-widest">Net</TableHead>
-                <TableHead className="text-fog uppercase text-xs tracking-widest">Escrow (6%)</TableHead>
+                <TableHead className="text-fog uppercase text-xs tracking-widest">Your commission</TableHead>
+                <TableHead className="text-fog uppercase text-xs tracking-widest">Marketing fee (6%)</TableHead>
+                <TableHead className="text-fog uppercase text-xs tracking-widest">Home warranty</TableHead>
                 <TableHead className="text-fog uppercase text-xs tracking-widest">Closing</TableHead>
-                <TableHead className="text-fog uppercase text-xs tracking-widest">Escrow status</TableHead>
+                <TableHead className="text-fog uppercase text-xs tracking-widest">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {deals.length === 0 && (
-                <TableRow><TableCell colSpan={7} className="text-center py-10 text-fog">No closed deals yet.</TableCell></TableRow>
+                <TableRow><TableCell colSpan={8} className="text-center py-10 text-fog">No closed deals yet.</TableCell></TableRow>
               )}
               {deals.map(d => (
                 <TableRow key={d.id} className="border-hairline hover:bg-obsidian/40" data-testid={`agent-deal-${d.id}`}>
                   <TableCell className="text-ink">${d.sale_price.toLocaleString()}</TableCell>
                   <TableCell className="text-fog">${d.gross_commission_amount.toLocaleString()}</TableCell>
                   <TableCell className="text-fog">${d.broker_fee_amount.toLocaleString()}</TableCell>
-                  <TableCell className="text-ink">${d.net_commission.toLocaleString()}</TableCell>
-                  <TableCell className="text-gold font-semibold">${d.escrow_amount.toLocaleString()}</TableCell>
+                  <TableCell className="text-ink">${(d.agent_commission ?? d.net_commission).toLocaleString()}</TableCell>
+                  <TableCell className="text-gold font-semibold">${(d.marketing_fee ?? d.escrow_amount).toLocaleString()}</TableCell>
+                  <TableCell className="text-sage-lo font-semibold">${(d.home_warranty_amount ?? 0).toLocaleString()}</TableCell>
                   <TableCell className="text-fog text-sm">{d.closing_date}</TableCell>
                   <TableCell>
                     <Badge className={d.escrow_status === "collected" ? "bg-gold/20 text-gold" : "bg-ink/10 text-ink"}>
@@ -191,6 +193,7 @@ function CloseDealDialog({ lead, onClose, onDone }) {
   const [salePrice, setSalePrice] = useState("");
   const [gc, setGc] = useState("3");
   const [bf, setBf] = useState("30");
+  const [warranty, setWarranty] = useState("600");
   const [date, setDate] = useState(new Date());
   const [busy, setBusy] = useState(false);
 
@@ -199,8 +202,12 @@ function CloseDealDialog({ lead, onClose, onDone }) {
     const sp = parseFloat(salePrice || 0);
     const gcAmt = sp * (parseFloat(gc || 0) / 100);
     const bfAmt = gcAmt * (parseFloat(bf || 0) / 100);
-    const net = gcAmt - bfAmt;
-    return { gcAmt, bfAmt, net, escrow: net * 0.06 };
+    const agentComm = gcAmt - bfAmt;
+    const marketing = agentComm * 0.06;
+    const warr = parseFloat(warranty || 0);
+    const total = marketing + warr;
+    const takeHome = agentComm - total;
+    return { gcAmt, bfAmt, agentComm, marketing, warr, total, takeHome };
   })();
 
   const submit = async () => {
@@ -211,9 +218,10 @@ function CloseDealDialog({ lead, onClose, onDone }) {
         sale_price: parseFloat(salePrice),
         gross_commission_percent: parseFloat(gc),
         broker_fee_percent: parseFloat(bf),
+        home_warranty_amount: parseFloat(warranty || 0),
         closing_date: format(date, "yyyy-MM-dd"),
       });
-      toast.success("Deal recorded. Escrow queued.");
+      toast.success("Deal recorded. Escrow + warranty queued.");
       onDone();
     } catch (e) {
       toast.error(formatApiError(e.response?.data?.detail));
@@ -245,26 +253,35 @@ function CloseDealDialog({ lead, onClose, onDone }) {
               <Input value={bf} onChange={(e) => setBf(e.target.value)} type="number" step="0.1" className="mt-2" data-testid="close-bf-percent" />
             </div>
           </div>
-          <div>
-            <Label className="text-fog text-xs uppercase tracking-widest">Closing date</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="ghost" className="btn-ghost rounded-lg h-10 mt-2 w-full justify-start" data-testid="close-date-trigger">
-                  <CalendarIcon className="h-4 w-4 mr-2 text-gold" />
-                  {format(date, "PPP")}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 bg-surface border-hairline">
-                <Calendar mode="single" selected={date} onSelect={(d) => d && setDate(d)} />
-              </PopoverContent>
-            </Popover>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label className="text-fog text-xs uppercase tracking-widest">Home warranty ($)</Label>
+              <Input value={warranty} onChange={(e) => setWarranty(e.target.value)} type="number" step="1" className="mt-2" data-testid="close-warranty" />
+              <div className="mt-1 text-xs text-navy/50">Paid to warranty provider for the client.</div>
+            </div>
+            <div>
+              <Label className="text-fog text-xs uppercase tracking-widest">Closing date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" className="btn-ghost rounded-lg h-10 mt-2 w-full justify-start" data-testid="close-date-trigger">
+                    <CalendarIcon className="h-4 w-4 mr-2 text-gold" />
+                    {format(date, "PPP")}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 bg-surface border-hairline">
+                  <Calendar mode="single" selected={date} onSelect={(d) => d && setDate(d)} />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
 
           <div className="tracing-beam rounded-xl p-4 bg-obsidian text-sm space-y-1" data-testid="close-preview">
             <div className="flex justify-between text-fog"><span>Gross commission</span><span>${preview.gcAmt.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
             <div className="flex justify-between text-fog"><span>Broker fee</span><span>−${preview.bfAmt.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
-            <div className="flex justify-between text-ink border-t border-hairline pt-1"><span>Net commission</span><span>${preview.net.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
-            <div className="flex justify-between text-gold font-bold text-base"><span>Escrow to platform (6%)</span><span>${preview.escrow.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
+            <div className="flex justify-between text-ink border-t border-hairline pt-1"><span>Your commission</span><span>${preview.agentComm.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
+            <div className="flex justify-between text-fog"><span>− Marketing fee (6%)</span><span>−${preview.marketing.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
+            <div className="flex justify-between text-fog"><span>− Home warranty (client)</span><span>−${preview.warr.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
+            <div className="flex justify-between text-gold font-bold text-base border-t border-hairline pt-2"><span>Your take-home</span><span>${preview.takeHome.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>
           </div>
         </div>
         <DialogFooter>

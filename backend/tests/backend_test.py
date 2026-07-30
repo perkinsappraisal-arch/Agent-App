@@ -1,10 +1,16 @@
 """AgentEscrow backend regression tests."""
+import io
 import os
 import uuid
 import pytest
 import requests
+from pathlib import Path
+from dotenv import load_dotenv
 
-BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://agent-lead-network.preview.emergentagent.com").rstrip("/")
+# Load REACT_APP_BACKEND_URL from frontend/.env when running via pytest
+load_dotenv(Path(__file__).resolve().parents[2] / "frontend" / ".env")
+
+BASE_URL = os.environ["REACT_APP_BACKEND_URL"].rstrip("/")
 API = f"{BASE_URL}/api"
 
 ADMIN_EMAIL = "perkinsappraisal@gmail.com"
@@ -107,6 +113,7 @@ class TestLeads:
         return {
             "kind": "buyer", "full_name": "Jane Buyer",
             "email": _unique_email("buyer"), "phone": "5559990000",
+            "street_address": "123 Main St",
             "city": "Austin", "state": "TX", "zip_code": "78701",
             "property_type": "Single Family", "price_range": "500k-800k",
             "timeline": "3 months",
@@ -188,13 +195,31 @@ class TestAgentFlow:
         payload = {
             "sale_price": 760000, "gross_commission_percent": 3,
             "broker_fee_percent": 30, "closing_date": "2026-02-15",
+            "home_warranty_amount": 600,
         }
         r = requests.post(f"{API}/agent/leads/{lead_id}/close",
                           headers={"Authorization": f"Bearer {token}"}, json=payload)
         assert r.status_code == 200, r.text
         d = r.json()
-        assert d["escrow_amount"] == 957.60
-        assert d["net_commission"] == 15960.00
+        # Response fields
+        assert d["marketing_fee"] == 957.60
+        assert d["home_warranty_amount"] == 600.0
+        assert d["total_escrow_disbursement"] == 1557.60
+        assert d["agent_commission"] == 15960.00
+        # Verify persistence via GET /api/agent/deals
+        deals = requests.get(f"{API}/agent/deals",
+                             headers={"Authorization": f"Bearer {token}"}).json()
+        deal = next(x for x in deals if x["lead_id"] == lead_id)
+        for key in ("marketing_fee", "home_warranty_amount",
+                    "total_escrow_disbursement", "agent_commission"):
+            assert key in deal, f"missing {key} in agent deal"
+        assert deal["marketing_fee"] == 957.60
+        assert deal["home_warranty_amount"] == 600.0
+        assert deal["total_escrow_disbursement"] == 1557.60
+        assert deal["agent_commission"] == 15960.00
+        # Backward-compat aliases still present
+        assert deal.get("escrow_amount") == 957.60
+        assert deal.get("net_commission") == 15960.00
 
     def test_close_deal_conflict_second_time(self):
         token = pytest.agent_token
@@ -241,3 +266,135 @@ class TestAdminMisc:
         token = pytest.agent_token
         r = requests.get(f"{API}/admin/agents", headers={"Authorization": f"Bearer {token}"})
         assert r.status_code == 403
+
+
+# ---------- Warranty defaults and validation (isolated new lead+agent flow) ----------
+def _create_approved_agent_and_assigned_lead(admin_headers):
+    """Helper: create fresh pending agent, approve, submit lead, assign."""
+    email = _unique_email("warranty_agent")
+    pay = {
+        "name": "Warranty Agent", "email": email, "password": "Passw0rd!",
+        "phone": "5551234567", "brokerage": "Warranty Realty LLC",
+        "license_number": "LICW1", "service_area": "Dallas TX",
+        "years_experience": 4,
+        "attest_not_zillow": True, "attest_not_corporate": True,
+        "attest_will_pay_escrow": True, "signed_name": "Warranty Agent",
+    }
+    ar = requests.post(f"{API}/agents/apply", json=pay).json()
+    agent_id = ar["user_id"]
+    requests.post(f"{API}/admin/agents/{agent_id}/approve", headers=admin_headers)
+    login = requests.post(f"{API}/auth/login", json={"email": email, "password": "Passw0rd!"}).json()
+    token = login["token"]
+
+    lead_payload = {
+        "kind": "buyer", "full_name": "Warranty Buyer",
+        "email": _unique_email("wbuyer"), "phone": "5559990000",
+        "street_address": "456 Oak St",
+        "city": "Dallas", "state": "TX", "zip_code": "75001",
+        "property_type": "Single Family", "price_range": "500k-800k",
+        "timeline": "3 months",
+        "attest_binding_escrow": True, "signed_name": "Warranty Buyer",
+    }
+    lr = requests.post(f"{API}/leads", json=lead_payload).json()
+    lead_id = lr["lead_id"]
+    requests.post(f"{API}/admin/leads/{lead_id}/assign",
+                  headers=admin_headers, json={"agent_id": agent_id})
+    return token, agent_id, lead_id
+
+
+class TestWarranty:
+    def test_home_warranty_defaults_to_600(self, admin_headers):
+        token, _, lead_id = _create_approved_agent_and_assigned_lead(admin_headers)
+        payload = {
+            "sale_price": 760000, "gross_commission_percent": 3,
+            "broker_fee_percent": 30, "closing_date": "2026-03-01",
+            # home_warranty_amount omitted → default 600
+        }
+        r = requests.post(f"{API}/agent/leads/{lead_id}/close",
+                          headers={"Authorization": f"Bearer {token}"}, json=payload)
+        assert r.status_code == 200, r.text
+        d = r.json()
+        assert d["home_warranty_amount"] == 600.0
+        assert d["marketing_fee"] == 957.60
+        assert d["total_escrow_disbursement"] == 1557.60
+
+    def test_home_warranty_negative_rejected(self, admin_headers):
+        token, _, lead_id = _create_approved_agent_and_assigned_lead(admin_headers)
+        payload = {
+            "sale_price": 500000, "gross_commission_percent": 3,
+            "broker_fee_percent": 30, "closing_date": "2026-03-01",
+            "home_warranty_amount": -100,
+        }
+        r = requests.post(f"{API}/agent/leads/{lead_id}/close",
+                          headers={"Authorization": f"Bearer {token}"}, json=payload)
+        assert r.status_code == 422
+
+    def test_home_warranty_over_5000_rejected(self, admin_headers):
+        token, _, lead_id = _create_approved_agent_and_assigned_lead(admin_headers)
+        payload = {
+            "sale_price": 500000, "gross_commission_percent": 3,
+            "broker_fee_percent": 30, "closing_date": "2026-03-01",
+            "home_warranty_amount": 5001,
+        }
+        r = requests.post(f"{API}/agent/leads/{lead_id}/close",
+                          headers={"Authorization": f"Bearer {token}"}, json=payload)
+        assert r.status_code == 422
+
+
+# ---------- Admin deals surface warranty/marketing fields ----------
+class TestAdminDeals:
+    def test_admin_deals_has_new_fields(self, admin_headers):
+        r = requests.get(f"{API}/admin/deals", headers=admin_headers)
+        assert r.status_code == 200
+        deals = r.json()
+        assert len(deals) > 0, "expected at least one deal from previous test"
+        # At least one deal (the ones we just created) must expose new fields.
+        required = ("marketing_fee", "home_warranty_amount",
+                    "total_escrow_disbursement", "agent_commission")
+        matching = [d for d in deals if all(k in d for k in required)]
+        assert len(matching) >= 1, (
+            "No admin deal exposes new fields marketing_fee/home_warranty_amount/"
+            "total_escrow_disbursement/agent_commission"
+        )
+
+
+# ---------- PDF content (agent + client) ----------
+class TestPDFContent:
+    def _extract_text(self, pdf_bytes: bytes) -> str:
+        """Very lightweight PDF text extraction — pypdf if available."""
+        try:
+            from pypdf import PdfReader
+        except ImportError:
+            try:
+                from PyPDF2 import PdfReader
+            except ImportError:
+                pytest.skip("No PDF library installed to inspect PDF text")
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        return "\n".join((p.extract_text() or "") for p in reader.pages).lower()
+
+    def test_agent_contract_pdf_marketing_wording(self, admin_headers):
+        import io as _io  # noqa
+        contract_id = pytest.pending_agent["contract_id"]
+        r = requests.get(f"{API}/contracts/{contract_id}/pdf", headers=admin_headers)
+        assert r.status_code == 200
+        text = self._extract_text(r.content)
+        assert "marketing service" in text, "agent PDF missing 'marketing service'"
+        assert "6%" in text or "six percent" in text
+        assert "home warranty" in text
+
+    def test_client_contract_pdf_home_warranty_wording(self, admin_headers):
+        # Fetch admin lead list to obtain a buyerseller contract id
+        leads = requests.get(f"{API}/admin/leads", headers=admin_headers).json()
+        contract_id = None
+        for l in leads:
+            if l.get("contract_id"):
+                contract_id = l["contract_id"]
+                break
+        assert contract_id, "no client contract available"
+        r = requests.get(f"{API}/contracts/{contract_id}/pdf", headers=admin_headers)
+        assert r.status_code == 200
+        text = self._extract_text(r.content)
+        assert "home warranty" in text
+        assert "no cost to the client" in text or "no cost" in text
+        assert "marketing fee" in text
+        assert "6%" in text or "six percent" in text

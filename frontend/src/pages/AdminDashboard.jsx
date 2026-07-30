@@ -46,7 +46,8 @@ export default function AdminDashboard() {
 
   const approvedAgents = agents.filter((a) => a.status === "approved");
   const pendingAgents = agents.filter((a) => a.status === "pending");
-  const totalEscrow = deals.reduce((s, d) => s + (d.escrow_amount || 0), 0);
+  const totalEscrow = deals.reduce((s, d) => s + (d.marketing_fee ?? d.escrow_amount ?? 0), 0);
+  const totalWarranty = deals.reduce((s, d) => s + (d.home_warranty_amount ?? 0), 0);
 
   const approve = async (id) => {
     try { await api.post(`/admin/agents/${id}/approve`); toast.success("Agent approved"); refresh(); }
@@ -76,7 +77,7 @@ export default function AdminDashboard() {
         <Stat icon={Users} label="Approved agents" value={approvedAgents.length} testId="stat-approved" />
         <Stat icon={UserCheck} label="Pending review" value={pendingAgents.length} testId="stat-pending" />
         <Stat icon={Home} label="Leads" value={leads.length} testId="stat-total-leads" />
-        <Stat icon={DollarSign} label="Escrow pipeline"
+        <Stat icon={DollarSign} label="Marketing fee pipeline"
               value={`$${totalEscrow.toLocaleString(undefined,{maximumFractionDigits:0})}`}
               testId="stat-escrow" />
       </div>
@@ -235,8 +236,9 @@ export default function AdminDashboard() {
                 <TableRow className="border-hairline hover:bg-transparent">
                   <TableHead className="text-fog uppercase text-xs tracking-widest">Agent</TableHead>
                   <TableHead className="text-fog uppercase text-xs tracking-widest">Sale</TableHead>
-                  <TableHead className="text-fog uppercase text-xs tracking-widest">Net commission</TableHead>
-                  <TableHead className="text-fog uppercase text-xs tracking-widest">Escrow (6%)</TableHead>
+                  <TableHead className="text-fog uppercase text-xs tracking-widest">Agent commission</TableHead>
+                  <TableHead className="text-fog uppercase text-xs tracking-widest">Marketing fee (6%)</TableHead>
+                  <TableHead className="text-fog uppercase text-xs tracking-widest">Home warranty</TableHead>
                   <TableHead className="text-fog uppercase text-xs tracking-widest">Closing</TableHead>
                   <TableHead className="text-fog uppercase text-xs tracking-widest">Status</TableHead>
                   <TableHead className="text-fog uppercase text-xs tracking-widest text-right">Action</TableHead>
@@ -244,7 +246,7 @@ export default function AdminDashboard() {
               </TableHeader>
               <TableBody>
                 {!loading && deals.length === 0 && (
-                  <TableRow><TableCell colSpan={7} className="text-center py-10 text-fog">No closed deals yet.</TableCell></TableRow>
+                  <TableRow><TableCell colSpan={8} className="text-center py-10 text-fog">No closed deals yet.</TableCell></TableRow>
                 )}
                 {deals.map(d => (
                   <TableRow key={d.id} className="border-hairline hover:bg-obsidian/40" data-testid={`admin-deal-${d.id}`}>
@@ -253,8 +255,9 @@ export default function AdminDashboard() {
                       <div className="text-fog text-xs">{d.agent?.brokerage}</div>
                     </TableCell>
                     <TableCell className="text-ink">${d.sale_price.toLocaleString()}</TableCell>
-                    <TableCell className="text-fog">${d.net_commission.toLocaleString()}</TableCell>
-                    <TableCell className="text-gold font-bold">${d.escrow_amount.toLocaleString()}</TableCell>
+                    <TableCell className="text-fog">${(d.agent_commission ?? d.net_commission).toLocaleString()}</TableCell>
+                    <TableCell className="text-gold font-bold">${(d.marketing_fee ?? d.escrow_amount).toLocaleString()}</TableCell>
+                    <TableCell className="text-sage-lo font-semibold">${(d.home_warranty_amount ?? 0).toLocaleString()}</TableCell>
                     <TableCell className="text-fog text-sm">{d.closing_date}</TableCell>
                     <TableCell>
                       <Badge className={d.escrow_status === "collected" ? "bg-gold/20 text-gold" : "bg-ink/10 text-ink"}>

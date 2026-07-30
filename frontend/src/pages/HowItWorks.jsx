@@ -6,8 +6,8 @@ export default function HowItWorks() {
   return (
     <div className="mx-auto max-w-4xl px-6 lg:px-10 py-16" data-testid="how-it-works">
       <div className="overline mb-3">How it works</div>
-      <h1 className="font-display font-black tracking-mega text-4xl sm:text-5xl leading-none">
-        Two contracts. One clean closing.
+      <h1 className="font-display font-black tracking-mega text-4xl sm:text-5xl leading-none text-navy">
+        A marketing service. Two contracts. One clean closing.
       </h1>
 
       <ol className="mt-14 space-y-10">
@@ -15,17 +15,17 @@ export default function HowItWorks() {
           {
             n: "01",
             title: "Client submits a lead",
-            body: "A buyer or seller fills a short form and signs a binding escrow consent — instructing their future closing agent to route 6% of the agent's net commission to AgentEscrow at closing. This does not increase the client's cost."
+            body: "A buyer or seller fills a short form and signs a binding escrow consent — instructing their future closing agent to disburse (a) a 6% marketing fee to AgentEscrow and (b) the premium for their 1-year home warranty, out of the agent's commission at closing. Nothing comes from the client's proceeds."
           },
           {
             n: "02",
-            title: "Agent applies & signs the contract",
-            body: "Independent local agents apply. Zillow, Trulia, Redfin, Opendoor, Offerpad and similar corporate structures are auto-rejected. Approved agents e-sign the 6%-of-net commitment."
+            title: "Agent applies & signs the marketing agreement",
+            body: "Independent local agents apply. Zillow, Trulia, Redfin, Opendoor, Offerpad and similar corporate structures are auto-rejected. Approved agents e-sign the 6% marketing fee + home-warranty commitment."
           },
           {
             n: "03",
-            title: "Admin matches the lead",
-            body: "An admin assigns each lead to a vetted, approved local agent that fits the property area."
+            title: "Admin matches the lead — within an hour",
+            body: "An admin assigns each lead to a vetted approved local agent who lives within an hour of the property or search area."
           },
           {
             n: "04",
@@ -34,15 +34,15 @@ export default function HowItWorks() {
           },
           {
             n: "05",
-            title: "Closing agent honors the escrow instruction",
-            body: "At settlement the closing agent disburses 6% × (Gross Commission − Broker Fee) to AgentEscrow directly, out of the same closing funds that pay the agent."
+            title: "Closing agent honors the disbursement instruction",
+            body: "At settlement the closing agent disburses (a) 6% × (Gross Commission − Broker Fee) to AgentEscrow, and (b) the home warranty premium to the warranty provider — both out of the agent's commission. The client walks away with keys and a 1-year home warranty."
           },
         ].map(s => (
           <li key={s.n} className="grid grid-cols-[80px_1fr] gap-8">
             <div className="font-display text-5xl font-black tracking-mega text-gold">{s.n}</div>
             <div>
-              <h3 className="font-display text-2xl font-bold tracking-tight">{s.title}</h3>
-              <p className="mt-2 text-fog leading-relaxed">{s.body}</p>
+              <h3 className="font-display text-2xl font-bold tracking-tight text-navy">{s.title}</h3>
+              <p className="mt-2 text-navy/70 leading-relaxed">{s.body}</p>
             </div>
           </li>
         ))}
