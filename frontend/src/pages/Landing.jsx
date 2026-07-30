@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 const HERO_IMG =
-  "https://customer-assets-v7afamib.emergentagent.net/job_agent-lead-network/artifacts/omki41an_1785368770609.png";
+  "https://customer-assets-v7afamib.emergentagent.net/job_agent-lead-network/artifacts/2frhiuko_1785369748797.png";
 const AGENT_1 = "https://images.unsplash.com/photo-1647580427155-0483906cb9de?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZWFsJTIwZXN0YXRlJTIwYWdlbnQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODUzNjY3NDR8MA&ixlib=rb-4.1.0&q=85";
 const AGENT_2 = "https://images.unsplash.com/photo-1581065178047-8ee15951ede6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAxODF8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjByZWFsJTIwZXN0YXRlJTIwYWdlbnQlMjBwb3J0cmFpdHxlbnwwfHx8fDE3ODUzNjY3NDR8MA&ixlib=rb-4.1.0&q=85";
 
