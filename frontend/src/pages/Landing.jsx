@@ -146,7 +146,7 @@ export default function Landing() {
             <p className="mt-4 text-navy/70 leading-relaxed">
               At closing, the settlement agent disburses two amounts out of
               the agent's commission: a <span className="text-navy font-semibold">
-              6% marketing fee to AgentEscrow</span>, and the{" "}
+              6% marketing fee to AgentMarketplace</span>, and the{" "}
               <span className="text-navy font-semibold">premium for a 1-year
               home warranty</span> that the platform arranges for the client.
               Both come out of the agent's commission — not the client's proceeds.
@@ -197,7 +197,7 @@ export default function Landing() {
             <p className="mt-6 text-lg text-navy/70 leading-relaxed max-w-lg">
               When a lead is submitted, the buyer or seller signs a binding
               escrow consent — an instruction to their closing agent to
-              disburse 6% of the agent's net commission to AgentEscrow at
+              disburse 6% of the agent's net commission to AgentMarketplace at
               closing. It doesn't increase their cost. It doesn't come from
               their proceeds. It comes from the agent's commission.
             </p>
@@ -222,7 +222,7 @@ export default function Landing() {
                 <div className="overline">Buyer's escrow consent · v1.1</div>
                 <div className="font-display text-2xl font-bold text-navy leading-tight">
                   I irrevocably instruct the closing agent to disburse (a) 6%
-                  of the referred agent's commission to AgentEscrow and (b)
+                  of the referred agent's commission to AgentMarketplace and (b)
                   the premium for my 1-year home warranty — all out of the
                   agent's commission, at closing.
                 </div>

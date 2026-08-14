@@ -15,7 +15,7 @@ export default function HowItWorks() {
           {
             n: "01",
             title: "Client submits a lead",
-            body: "A buyer or seller fills a short form and signs a binding escrow consent — instructing their future closing agent to disburse (a) a 6% marketing fee to AgentEscrow and (b) the premium for their 1-year home warranty, out of the agent's commission at closing. Nothing comes from the client's proceeds."
+            body: "A buyer or seller fills a short form and signs a binding escrow consent — instructing their future closing agent to disburse (a) a 6% marketing fee to AgentMarketplace and (b) the premium for their 1-year home warranty, out of the agent's commission at closing. Nothing comes from the client's proceeds."
           },
           {
             n: "02",
@@ -35,7 +35,7 @@ export default function HowItWorks() {
           {
             n: "05",
             title: "Closing agent honors the disbursement instruction",
-            body: "At settlement the closing agent disburses (a) 6% × (Gross Commission − Broker Fee) to AgentEscrow, and (b) the home warranty premium to the warranty provider — both out of the agent's commission. The client walks away with keys and a 1-year home warranty."
+            body: "At settlement the closing agent disburses (a) 6% × (Gross Commission − Broker Fee) to AgentMarketplace, and (b) the home warranty premium to the warranty provider — both out of the agent's commission. The client walks away with keys and a 1-year home warranty."
           },
         ].map(s => (
           <li key={s.n} className="grid grid-cols-[80px_1fr] gap-8">

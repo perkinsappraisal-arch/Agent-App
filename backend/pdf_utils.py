@@ -33,7 +33,7 @@ def _footer(canvas, doc):
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(GOLD)
     canvas.drawString(0.75 * inch, 0.5 * inch,
-                      "AgentEscrow — Contract copy • Legally binding upon signature")
+                      "AgentMarketplace — Contract copy • Legally binding upon signature")
     canvas.drawRightString(7.75 * inch, 0.5 * inch, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -45,11 +45,11 @@ def build_agent_contract_pdf(*, agent_name, agent_email, brokerage,
     doc = SimpleDocTemplate(buf, pagesize=LETTER,
                             leftMargin=0.75 * inch, rightMargin=0.75 * inch,
                             topMargin=0.75 * inch, bottomMargin=0.75 * inch,
-                            title="AgentEscrow — Agent Lead Contract")
+                            title="AgentMarketplace — Agent Lead Contract")
     ss = _base_styles()
     story = []
 
-    story.append(Paragraph("AGENTESCROW", ss["OverLine"]))
+    story.append(Paragraph("AGENTMARKETPLACE", ss["OverLine"]))
     story.append(Paragraph("Agent Marketing Service &amp; Closing Escrow Agreement", ss["TitleBig"]))
     story.append(HRFlowable(width="100%", thickness=1, color=GOLD, spaceAfter=14))
 
@@ -77,7 +77,7 @@ def build_agent_contract_pdf(*, agent_name, agent_email, brokerage,
 
     story.append(Paragraph("1. Nature of Service — Marketing", ss["H2"]))
     story.append(Paragraph(
-        "AgentEscrow ('Platform') is a <b>marketing service</b> that refers "
+        "AgentMarketplace ('Platform') is a <b>marketing service</b> that refers "
         "qualifying buyer and seller leads to the undersigned licensed real "
         "estate agent ('Agent') in the Agent's declared service area. This is "
         "not an escrow, brokerage, or title service. No lead volume or "
@@ -108,7 +108,7 @@ def build_agent_contract_pdf(*, agent_name, agent_email, brokerage,
         "The Agent shall instruct the closing / settlement agent (title "
         "company, escrow officer, or closing attorney) to disburse, out of "
         "closing funds and prior to release of Agent's own commission: "
-        "(a) the marketing fee to AgentEscrow, and (b) the home warranty "
+        "(a) the marketing fee to AgentMarketplace, and (b) the home warranty "
         "premium to the designated home warranty provider. Formally: "
         "<i>Total Closing Disbursement = 0.06 × (Gross Commission − "
         "Broker Fee) + Home Warranty Premium</i>. Both amounts are due "
@@ -161,11 +161,11 @@ def build_client_contract_pdf(*, client_name, client_email, client_role,
     doc = SimpleDocTemplate(buf, pagesize=LETTER,
                             leftMargin=0.75 * inch, rightMargin=0.75 * inch,
                             topMargin=0.75 * inch, bottomMargin=0.75 * inch,
-                            title="AgentEscrow — Client Escrow Consent")
+                            title="AgentMarketplace — Client Escrow Consent")
     ss = _base_styles()
     story = []
 
-    story.append(Paragraph("AGENTESCROW", ss["OverLine"]))
+    story.append(Paragraph("AGENTMARKETPLACE", ss["OverLine"]))
     story.append(Paragraph("Client Escrow Consent &amp; Binding Agreement", ss["TitleBig"]))
     story.append(HRFlowable(width="100%", thickness=1, color=GOLD, spaceAfter=14))
     party_data = [
@@ -194,7 +194,7 @@ def build_client_contract_pdf(*, client_name, client_email, client_role,
     story.append(Paragraph(
         "The undersigned ('Client') is a prospective buyer or seller who has "
         "requested a local, non-corporate real estate agent referral from "
-        "AgentEscrow ('Platform'), which is a <b>marketing service</b> that "
+        "AgentMarketplace ('Platform'), which is a <b>marketing service</b> that "
         "connects clients with independent local agents.", ss["Body"]))
 
     story.append(Paragraph("2. What the Client Receives", ss["H2"]))
@@ -230,7 +230,7 @@ def build_client_contract_pdf(*, client_name, client_email, client_role,
 
     story.append(Paragraph("5. Platform Is Not an Escrow Holder", ss["H2"]))
     story.append(Paragraph(
-        "AgentEscrow itself does <b>not</b> act as a licensed escrow holder. "
+        "AgentMarketplace itself does <b>not</b> act as a licensed escrow holder. "
         "This document is a written disbursement instruction to the closing "
         "or settlement agent of Client's transaction. Actual escrow, title, "
         "and settlement services are performed by a licensed third party of "

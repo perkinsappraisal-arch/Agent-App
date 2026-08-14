@@ -1,4 +1,4 @@
-"""Corporate / Zillow-structure brokerage blacklist for AgentEscrow.
+"""Corporate / Zillow-structure brokerage blacklist for AgentMarketplace.
 
 Agents affiliated with these brokerages (or brokerages that match the
 corporate-iBuyer pattern) may NOT participate as lead-receiving agents.

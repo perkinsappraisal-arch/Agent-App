@@ -1,4 +1,4 @@
-# AgentEscrow — PRD
+# AgentMarketplace — PRD
 
 ## Original Problem Statement
 > New app for agents its for buyers and sellers who need local real estate agents this gives them leads and makes them sign a contract to give 6% of their gross commission less their broker fee for their leads. They must agree to enter the 6% in escrow. No zillow agents, zillow is excluded from this service and other corporate entities with a zillow structure. The is a risk free lead operation that only collects out of escrow if they sell a house.

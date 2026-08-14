@@ -89,7 +89,7 @@ export default function AgentApply() {
             <p className="mt-4 text-fog text-lg leading-relaxed">
               Your brokerage matched an excluded corporate/iBuyer term:{" "}
               <span className="text-signal font-mono">{result.matched_term}</span>.
-              AgentEscrow only accepts independent local agents.
+              AgentMarketplace only accepts independent local agents.
             </p>
           </>
         ) : (
@@ -135,7 +135,7 @@ export default function AgentApply() {
       </h1>
       <p className="mt-3 text-fog max-w-xl">
         {step === 1
-          ? "AgentEscrow is only for independent, local, licensed agents. If your brokerage looks like Zillow, this is not for you."
+          ? "AgentMarketplace is only for independent, local, licensed agents. If your brokerage looks like Zillow, this is not for you."
           : "You are attesting to your independence and agreeing to route 6% of net commission through closing escrow — only when a deal actually closes."}
       </p>
 
@@ -195,7 +195,7 @@ export default function AgentApply() {
               <div className="overline">Agent Lead & Commission Escrow Agreement · v1.0</div>
             </div>
             <div className="space-y-4 text-fog leading-relaxed max-h-72 overflow-y-auto pr-3 text-sm">
-              <p><strong className="text-ink">1. Marketing service.</strong> AgentEscrow is a marketing service that refers qualifying local leads. No lead volume is guaranteed.</p>
+              <p><strong className="text-ink">1. Marketing service.</strong> AgentMarketplace is a marketing service that refers qualifying local leads. No lead volume is guaranteed.</p>
               <p><strong className="text-ink">2. Marketing fee — 6% of your commission.</strong> Six percent of your <em>own</em> commission (Gross Commission − Broker Fee), collected via the closing agent, only at closing.</p>
               <p className="font-mono text-gold text-xs">Marketing Fee = 0.06 × (Gross Commission − Broker Fee)</p>
               <p><strong className="text-ink">3. Home warranty for the client.</strong> You will additionally purchase a 1-year home warranty for the client (default $600, confirmed at closing), paid out of your commission at closing.</p>
@@ -212,7 +212,7 @@ export default function AgentApply() {
             My brokerage is an <strong className="text-ink">independent local firm</strong>, not a corporate iBuyer or platform-owned lead-farm.
           </Attest>
           <Attest testId="attest-will-pay" checked={form.attest_will_pay_escrow} onCheck={(v) => upd("attest_will_pay_escrow", v)}>
-            I will instruct my closing agent to disburse, out of my commission at closing: (a) 6% of my commission to AgentEscrow as a marketing fee, and (b) the premium for the client's 1-year home warranty.
+            I will instruct my closing agent to disburse, out of my commission at closing: (a) 6% of my commission to AgentMarketplace as a marketing fee, and (b) the premium for the client's 1-year home warranty.
           </Attest>
 
           <Field label="Type your full legal name to sign" testId="agent-sign">

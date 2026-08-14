@@ -46,7 +46,7 @@ module.exports = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
-                /* AgentEscrow — cheerful warm palette
+                /* AgentMarketplace — cheerful warm palette
                  * We keep the semantic names so existing className strings still work,
                  * but the values are remapped to a bright, welcoming home-buying palette. */
                 obsidian: "#FCF9F0",   // was dark bg — now warm cream (page background)

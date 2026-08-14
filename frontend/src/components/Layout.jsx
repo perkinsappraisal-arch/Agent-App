@@ -22,7 +22,7 @@ export default function Layout({ children }) {
           <Link to="/" data-testid="nav-home" className="flex items-center gap-2 group">
             <ShieldCheck className="h-5 w-5 text-gold" strokeWidth={1.5} />
             <span className="font-display text-lg tracking-mega font-black">
-              agent<span className="text-gold">escrow</span>
+              agent<span className="text-gold">marketplace</span>
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-10 grid gap-6 md:grid-cols-3 text-sm text-navy/70">
           <div>
             <div className="font-display text-navy text-lg tracking-mega font-black">
-              agent<span className="text-gold">escrow</span>
+              agent<span className="text-gold">marketplace</span>
             </div>
             <p className="mt-2 max-w-xs">
               Risk-free real estate leads secured by binding closing-escrow
@@ -103,7 +103,7 @@ export default function Layout({ children }) {
           <div>
             <div className="overline mb-3">Legal</div>
             <p>
-              AgentEscrow is not a licensed escrow holder. All disbursements are
+              AgentMarketplace is not a licensed escrow holder. All disbursements are
               handled by the closing/settlement agent chosen for the transaction.
             </p>
           </div>

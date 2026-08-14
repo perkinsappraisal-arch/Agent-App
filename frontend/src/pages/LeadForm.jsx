@@ -240,7 +240,7 @@ export default function LeadForm() {
             </div>
             <div className="space-y-4 text-fog leading-relaxed max-h-72 overflow-y-auto pr-3 text-sm">
               <p><strong className="text-ink">1. Purpose.</strong> You've requested a
-              local, non-corporate agent referral from AgentEscrow — a marketing
+              local, non-corporate agent referral from AgentMarketplace — a marketing
               service that connects clients to trusted local agents.</p>
               <p><strong className="text-ink">2. What you get.</strong> A vetted
               local agent within an hour of your home,{" "}
@@ -251,14 +251,14 @@ export default function LeadForm() {
               irrevocably instruct the closing / settlement agent of the
               resulting transaction to disburse (a) a marketing fee of
               <span className="text-gold"> six percent (6%) of the agent's own
-              commission</span> to AgentEscrow, and (b) the premium for your
+              commission</span> to AgentMarketplace, and (b) the premium for your
               1-year home warranty — <em>both out of the agent's commission at
               closing</em>. These amounts do not come from your proceeds or
               purchase funds.</p>
               <p><strong className="text-ink">4. Binding.</strong> You will not
               instruct the closing agent to withhold either disbursement.</p>
               <p><strong className="text-ink">5. Not an Escrow Holder.</strong>
-              AgentEscrow is not itself a licensed escrow holder. Actual escrow,
+              AgentMarketplace is not itself a licensed escrow holder. Actual escrow,
               title and settlement services are performed by a licensed third
               party of your or the agent's choosing.</p>
               <p><strong className="text-ink">6. No Sale, No Obligation.</strong>

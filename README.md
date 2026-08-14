@@ -1,4 +1,4 @@
-# AgentEscrow
+# AgentMarketplace
 
 A cheerful, closing-secured **marketing service** that connects buyers/sellers with trusted local real estate agents — within an hour of the property. Agents pay a **6% marketing fee on their own commission** and fund a **1-year home warranty for the client**, both at closing. No Zillow. No corporate iBuyers.
 

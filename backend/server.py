@@ -1,4 +1,4 @@
-"""AgentEscrow backend — FastAPI app.
+"""AgentMarketplace backend — FastAPI app.
 
 Roles: admin, agent (pending → approved).
 Public buyer/seller flow at POST /api/leads.
@@ -47,12 +47,12 @@ HOME_WARRANTY_DEFAULT = 600.0                 # default 1-year home warranty cos
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
 
-app = FastAPI(title="AgentEscrow API")
+app = FastAPI(title="AgentMarketplace API")
 api = APIRouter(prefix="/api")
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(name)s | %(message)s")
-log = logging.getLogger("agentescrow")
+log = logging.getLogger("agentmarketplace")
 
 
 # ---------- Helpers ----------
@@ -606,7 +606,7 @@ async def contract_pdf(contract_id: str, user: dict = Depends(get_current_user))
 # ---------- Health ----------
 @api.get("/")
 async def root():
-    return {"service": "AgentEscrow", "ok": True}
+    return {"service": "AgentMarketplace", "ok": True}
 
 
 @api.get("/blacklist/check")
